@@ -1,0 +1,25 @@
+name: node-api-spec-boilerplate
+
+on: [push]
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    strategy:
+      matrix:
+        node-version: [16.x]
+    steps:
+    - uses: actions/checkout@v1 
+    - name: Install node
+      uses: actions/setup-node@v1
+      with:
+        node-version: ${{ matrix.node-version }}
+    - name: Build
+      run: |
+        yarn --frozen-lockfile
+        npm run build
+    - name: Upload Spec
+      uses: actions/upload-artifact@v2
+      with:
+        name: swagger-spec
+        path: dist/generated/swagger.json

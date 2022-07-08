@@ -1,9 +1,13 @@
 import express from "express";
 import bodyParser from "body-parser";
+import cors from "cors";
 import { RegisterRoutes } from "./generated/routes";
 import * as swaggerUi from 'swagger-ui-express';
 
 export const app = express();
+
+// Open cros--origin
+app.use(cors())
 
 // Use body parser to read sent json payloads
 app.use(
@@ -11,6 +15,7 @@ app.use(
     extended: true,
   })
 );
+
 app.use(bodyParser.json());
 
 RegisterRoutes(app);
