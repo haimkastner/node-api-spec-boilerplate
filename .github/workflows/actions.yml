@@ -23,14 +23,11 @@ jobs:
       run: |
           version=$(npm version patch)
           echo $version
-          echo ::set-output name=version::$version
-    - name: Commit and push changes
-      if: github.ref == 'refs/heads/main'
-      uses: devops-infra/action-commit-push@master
-      with:
-        github_token: ${{ secrets.GITHUB_TOKEN }}
-        commit_message: Update to version ${{ steps.update_version.outputs.version }}
-        commit_prefix: "[AUTO-COMMIT]"
+          git config user.name "GitHub Actions Bot"
+          git config user.email "<>"
+          git add package.json
+          git commit -m "[AUTO-COMMIT] Update to version ${{ version }} [ci skip]"
+          git push origin main
     - name: Build
       run: |
         yarn --frozen-lockfile
