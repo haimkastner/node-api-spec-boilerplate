@@ -9,7 +9,7 @@ jobs:
       matrix:
         node-version: [16.x]
     steps:
-    - uses: actions/checkout@v1 
+    - uses: actions/checkout@v2
     - name: Install node
       uses: actions/setup-node@v1
       with:
@@ -24,14 +24,13 @@ jobs:
           version=$(npm version patch)
           echo $version
           echo ::set-output name=version::$version
-          git config --global user.email $GIT_USER_EMAIL
-          git config --global user.name $GIT_USER_NAME
     - name: Commit and push changes
       if: github.ref == 'refs/heads/main'
       uses: devops-infra/action-commit-push@master
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         commit_message: Update to version ${{ steps.update_version.outputs.version }}
+        commit_prefix: "[AUTO-COMMIT]"
     - name: Build
       run: |
         yarn --frozen-lockfile
