@@ -28,4 +28,4 @@ jobs:
         SWAGGERHUB_API_KEY: '${{ secrets.SWAGGERHUB_API_KEY }}'
       if: github.ref == 'refs/heads/main'
       run: |
-        npx swaggerhub-cli api:create haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
+        npx swaggerhub-cli api:update haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
