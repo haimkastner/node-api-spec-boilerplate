@@ -26,7 +26,7 @@ jobs:
           git config user.name "GitHub Actions Bot"
           git config user.email "<>"
           git add package.json
-          git commit -m "[AUTO-COMMIT] Update to version ${{ version }} [ci skip]"
+          git commit -m "[AUTO-COMMIT] Update to version $version [ci skip]"
           git push origin main
     - name: Build
       run: |
