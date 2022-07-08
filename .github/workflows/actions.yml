@@ -14,6 +14,19 @@ jobs:
       uses: actions/setup-node@v1
       with:
         node-version: ${{ matrix.node-version }}
+    - name: Update version - patch
+      if: github.ref == 'refs/heads/main'
+      id: update_version
+      run: |
+          version=$(npm version patch)
+          echo $version
+          echo ::set-output name=version::$version
+    - name: Commit and push changes
+      if: github.ref == 'refs/heads/main'
+      uses: devops-infra/action-commit-push@master
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: Update to version ${{ steps.update_version.outputs.version }}
     - name: Build
       run: |
         yarn --frozen-lockfile
@@ -28,4 +41,4 @@ jobs:
         SWAGGERHUB_API_KEY: '${{ secrets.SWAGGERHUB_API_KEY }}'
       if: github.ref == 'refs/heads/main'
       run: |
-        npx swaggerhub-cli api:update haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
+        npx swaggerhub-cli api:create haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
