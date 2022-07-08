@@ -44,6 +44,8 @@ jobs:
     - name: Upload Spec To Hub
       env:
         SWAGGERHUB_API_KEY: '${{ secrets.SWAGGERHUB_API_KEY }}'
+        API_SERVER_URL: '${{ secrets.API_SERVER_URL }}'
       if: github.ref == 'refs/heads/main'
       run: |
+        node ./scripts/set-spec-server.js dist/generated/swagger.json $API_SERVER_URL
         npx swaggerhub-cli api:create haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
