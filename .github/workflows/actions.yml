@@ -30,9 +30,6 @@ jobs:
       with:
         github_token: ${{ secrets.GITHUB_TOKEN }}
         commit_message: Update to version ${{ steps.update_version.outputs.version }} [skip ci]
-        commit_user_name: GitHub Actions Bot
-        commit_user_email: haim.kastner@gmail.com
-        commit_author: Author <haim.kastner@gmail.com>
     - name: Build
       run: |
         yarn --frozen-lockfile
