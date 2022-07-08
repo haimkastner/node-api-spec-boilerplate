@@ -1,4 +1,3 @@
-import path from 'path';
 import fs from 'fs';
 
 const SPEC_PATH = process.argv[2];
