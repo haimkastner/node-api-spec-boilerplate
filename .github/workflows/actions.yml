@@ -16,11 +16,16 @@ jobs:
         node-version: ${{ matrix.node-version }}
     - name: Update version - patch
       if: github.ref == 'refs/heads/main'
+      env:
+        GIT_USER_NAME: '${{ secrets.GIT_USER_NAME }}'
+        GIT_USER_EMAIL: '${{ secrets.GIT_USER_EMAIL }}'
       id: update_version
       run: |
           version=$(npm version patch)
           echo $version
           echo ::set-output name=version::$version
+          git config --global user.email $GIT_USER_EMAIL
+          git config --global user.name $GIT_USER_NAME
     - name: Commit and push changes
       if: github.ref == 'refs/heads/main'
       uses: devops-infra/action-commit-push@master
