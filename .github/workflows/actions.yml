@@ -23,11 +23,16 @@ jobs:
       run: |
           version=$(npm version patch)
           echo $version
-          git config user.name "GitHub Actions Bot"
-          git config user.email "<>"
-          git add package.json
-          git commit -m "[AUTO-COMMIT] Update to version $version [ci skip]"
-          git push origin main
+          echo ::set-output name=version::$version
+    - name: Commit and push changes
+      if: github.ref == 'refs/heads/main'
+      uses: stefanzweifel/git-auto-commit-action@v4
+      with:
+        github_token: ${{ secrets.GITHUB_TOKEN }}
+        commit_message: Update to version ${{ steps.update_version.outputs.version }} [skip ci]
+        commit_user_name: GitHub Actions Bot
+        commit_user_email: haim.kastner@gmail.com
+        commit_author: Author <haim.kastner@gmail.com>
     - name: Build
       run: |
         yarn --frozen-lockfile
