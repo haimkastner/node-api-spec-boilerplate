@@ -7,7 +7,7 @@ import * as swaggerUi from 'swagger-ui-express';
 export const app = express();
 
 // Open cross--origin access
-app.use(cors())
+app.use(cors());
 
 // Use body parser to read sent json payloads
 app.use(
@@ -25,8 +25,8 @@ app.use('/', swaggerUi.serve, async (req: express.Request, res: express.Response
     return res.send(swaggerUi.generateHTML(await import('./generated/swagger.json')));
 });
 
-// Use passed PROT or as default 3000
-const port = process.env.PORT || 3000;
+// Use passed PROT or as default 8080
+const port = process.env.PORT || 8080;
 
 // Start listening to requests
 app.listen(port, () =>

@@ -16,7 +16,7 @@ interface Ping {
 }
 
 interface Pong {
-    /** The greent arrived from API caller */
+    /** The greeting message arrived from the API caller */
     greeting: string;
     /** The tome when the ping request arrived */
     time: number;
