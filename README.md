@@ -7,17 +7,17 @@
 Build API server fast and get API spec, documentation and consumer facade for free
 
 ---
-###`Article`
+`Article`
 📙 For all info of how to create and build it, see [Perfect API Server](https://blog.castnet.club/blog/en/perfect-api-server-part-a) article in [my blog](https://blog.castnet.club/en) 📙
 
 ---
-###`Goal`
+`Goal`
 
 This boilerplate project used to be a start to API server that includes one-time deceleration of API controller, and from it generate all other required API components, instead of massive code and types duplication for each components.
 
 
 ---
-###`Includes`
+`Includes`
 
 This project used to be a boilerplate for building an API server with the following parts:
 * Implementation Rest API controllers using [TSOA](https://tsoa-community.github.io/docs/)
@@ -28,7 +28,7 @@ This project used to be a boilerplate for building an API server with the follow
 * Hosting example app front UI on [Netlify](https://react-typescript-spec-facade.castnet.club/)
 
 ---
-###`Config` 
+`Config` 
 All config by env vars, see for all options in [./env.example](./.env.example):
 * `PORT`: The API Server port, as default it's `8080`   
 
