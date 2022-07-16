@@ -29,6 +29,7 @@ This project used to be a boilerplate for building an API server with the follow
 
 ---
 `Config` 
+
 All config by env vars, see for all options in [./env.example](./.env.example):
 * `PORT`: The API Server port, as default it's `8080`   
 
