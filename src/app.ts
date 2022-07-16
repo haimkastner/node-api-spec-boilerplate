@@ -3,6 +3,10 @@ import bodyParser from "body-parser";
 import cors from "cors";
 import { RegisterRoutes } from "./generated/routes";
 import * as swaggerUi from 'swagger-ui-express';
+import dotenv from 'dotenv';
+
+// Load variables from .env file
+dotenv.config();
 
 export const app = express();
 
