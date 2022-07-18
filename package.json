@@ -1,6 +1,6 @@
 {
   "name": "api-spec-boilerplate",
-  "version": "1.0.11",
+  "version": "1.0.12",
   "description": "Build API server fast and get API spec and documentation for free - Node.JS boilerplate",
   "main": "app.js",
   "scripts": {
