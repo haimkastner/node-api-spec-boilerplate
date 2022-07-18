@@ -7,7 +7,7 @@
 Build API server fast and get API spec, documentation and consumer facade for free
 
 ---
-`Article`
+
 📙 For all info of how to create and build it, see [Perfect API Server](https://blog.castnet.club/blog/en/perfect-api-server-part-a) article in [my blog](https://blog.castnet.club/en) 📙
 
 ---

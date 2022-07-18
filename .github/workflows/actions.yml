@@ -1,51 +1,47 @@
-name: node-api-spec-boilerplate
+name: node-api-spec-boilerplate # The deployment/action name
 
-on: [push]
+on: [push] # Run jobs on each code push to remote Git
 
 jobs:
-  build:
-    runs-on: ubuntu-latest
+  build: # The only job in this example 
+    runs-on: ubuntu-latest # Run the job on a Linux ubuntu latest
     strategy:
       matrix:
-        node-version: [16.x]
+        node-version: [16.x] # The collection of Node version to run job on it (v16 only)
     steps:
-    - name: Checkout repository
-      uses: actions/checkout@v2
+    - name: Checkout repository # First of all, checkout the Git repo using official actions/checkout@v2 package
+      uses: actions/checkout@v2 
     - name: Install node
-      uses: actions/setup-node@v1
+      uses: actions/setup-node@v1 # Install Node.JS with the predefined selected versions, using official actions/setup-node@v1 package
       with:
         node-version: ${{ matrix.node-version }}
-    - name: Update version - patch
+    - name: Update version - patch # Since publishing API to swagger required increasing version, in case it's main branch (only) bomb patch version
       if: github.ref == 'refs/heads/main'
       id: update_version
-      run: |
+      run: | # Use NPM to patch version, then keep the new version in the step's context 
           version=$(npm --no-git-tag-version version patch)
           echo $version
           echo ::set-output name=version::$version
-    - name: Commit and push changes
+    - name: Commit and push changes # After updating version, commit version, again, only in main branch
+      if: github.ref == 'refs/heads/main'
       uses: devops-infra/action-commit-push@master
-      with:
+      with: # In the comment add suffix "[skip ci]" to avoid triggering endless recurs call to a new action job due to a commit push
         github_token: ${{ secrets.GITHUB_TOKEN }}
         commit_message: Update to version ${{ steps.update_version.outputs.version }} [skip ci]
-    - name: Commit and push changes
-      if: github.ref == 'refs/heads/main'
-      uses: stefanzweifel/git-auto-commit-action@v4
-      with:
-        commit_message: Update to version ${{ steps.update_version.outputs.version }} [skip ci]
-    - name: Build
-      run: |
+    - name: Build # Build project, relevant to all branches :) 
+      run: | # Use yarn package manager to fetch dependencies in CI mode, then build project
         yarn --frozen-lockfile
         npm run build
-    - name: Upload Spec To Artifactory
+    - name: Upload Spec To Artifactory # Once build finished, upload the new Spec to the GitHub's artifactory
       uses: actions/upload-artifact@v2
       with:
         name: swagger-spec
         path: dist/generated/swagger.json
-    - name: Upload Spec To Hub
+    - name: Upload Spec To Hub # And finally all ready to upload new spec version to swagger hub, for main branch only 😊
       env:
-        SWAGGERHUB_API_KEY: '${{ secrets.SWAGGERHUB_API_KEY }}'
-        API_SERVER_URL: '${{ secrets.API_SERVER_URL }}'
+        SWAGGERHUB_API_KEY: '${{ secrets.SWAGGERHUB_API_KEY }}' # Export the SWAGGERHUB_API_KEY secret as environment variable, use to auth publish request
+        API_SERVER_URL: '${{ secrets.API_SERVER_URL }}' # Export the API_SERVER_URL secret as environment variable, used to set the API Server URL to the published spec.
       if: github.ref == 'refs/heads/main'
-      run: |
+      run: | # Update the spec with the API Server URL, then publish the new ready to publish spec 
         node ./scripts/set-spec-server.js dist/generated/swagger.json $API_SERVER_URL
         npx swaggerhub-cli api:create haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
