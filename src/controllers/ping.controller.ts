@@ -23,7 +23,7 @@ interface Pong {
 }
 
 @Tags('Status')
-@Route("Status")
+@Route("status")
 export class PingController extends Controller {
 
     /**

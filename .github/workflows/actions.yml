@@ -31,6 +31,7 @@ jobs:
     - name: Build # Build project, relevant to all branches :) 
       run: | # Use yarn package manager to fetch dependencies in CI mode, then build project
         yarn --frozen-lockfile
+        npm run test
         npm run build
     - name: Upload Spec To Artifactory # Once build finished, upload the new Spec to the GitHub's artifactory
       uses: actions/upload-artifact@v2
