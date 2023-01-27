@@ -31,5 +31,17 @@ This project used to be a boilerplate for building an API server with the follow
 `Config` 
 
 All config by env vars, see for all options in [./env.example](./.env.example):
-* `PORT`: The API Server port, as default it's `8080`   
+* `PORT`: The API Server port, as default it's `8080`  
 
+---
+
+### `Pase 2 - Long processing via Rest API` 
+
+
+Adding jobs infrastructure required the following implementation:  
+* A new [jobs service](https://github.com/haimkastner/node-api-spec-boilerplate/blob/with-jobs/src/services/jobs.service.ts) & [API](https://github.com/haimkastner/node-api-spec-boilerplate/blob/with-jobs/src/controllers/jobs.controller.ts).
+* TSOA [template](https://github.com/haimkastner/node-api-spec-boilerplate/blob/with-jobs/src/infrastructure/routes.template.hbs) to inject job execution for operation.
+* A [middleware](https://github.com/haimkastner/node-api-spec-boilerplate/blob/with-jobs/src/infrastructure/jobify.middleware.ts) for handling request to execute as jobs.
+
+
+📙 For all info of how to implement the job infrastructure, see [Long processing via Rest API](https://blog.castnet.club/en/blog/perfect-api-server-part-c-jobs) article in [my blog](https://blog.castnet.club/en) 📙
