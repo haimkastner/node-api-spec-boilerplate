@@ -9,6 +9,7 @@
       "specVersion": 3
     },
     "routes": {
-      "routesDir": "src/generated"
+      "routesDir": "src/generated",
+      "middlewareTemplate" : "src/infrastructure/routes.template.hbs"
     }
   }
