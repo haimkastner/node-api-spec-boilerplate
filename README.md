@@ -44,4 +44,4 @@ Adding jobs infrastructure required the following implementation:
 * A [middleware](https://github.com/haimkastner/node-api-spec-boilerplate/blob/with-jobs/src/infrastructure/jobify.middleware.ts) for handling request to execute as jobs.
 
 
-📙 For all info of how to implement the job infrastructure, see [Long processing via Rest API](https://blog.castnet.club/en/blog/perfect-api-server-part-c-jobs) article in [my blog](https://blog.castnet.club/en) 📙
+For all info of how to implement the job infrastructure, see [Long processing via Rest API](https://blog.castnet.club/en/blog/perfect-api-server-part-c-jobs) article in [my blog](https://blog.castnet.club/en) 📑
