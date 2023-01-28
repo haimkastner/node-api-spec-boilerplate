@@ -1,9 +1,21 @@
-import { JobFlag, JobFlagHeader, runNewJob } from "../services/jobs.service";
+import { JobFlag, JobFlagHeader, runNewJob , JobOptions as JobOptionsObject } from "../services/jobs.service";
 import { BaseController } from "./base.controller";
 
 export interface JobInfo {
     jobId: string;
 }
+
+/** Hold job option per operation name */
+const predefinedJobOptions : { [operation in string]: JobOptionsObject } = {};
+
+/**
+ * Set predefined job option annotation.
+ * @param options The job options to defined.
+ */
+export const JobOptions = (options: JobOptionsObject) : Function => ((target: any, operationName: string) => {
+    // The operation name is a unique name given to every API call. 
+    predefinedJobOptions[operationName] = options;
+})
 
 /**
  * "Jobify" operation by getting the request, controller and the operation method, and executing it as a job if required.
@@ -12,9 +24,10 @@ export interface JobInfo {
  * @param controller The controller instance created for this operation 
  * @param method The method in the controller to execute to run the operation
  * @param args The method args to execute with.
+ * @param operationName The operation name key.
  * @returns 
  */
-export async function jobify(request: any, controller: BaseController, method: () => any, args: any) : Promise<any | JobInfo> {
+export async function jobify(request: any, controller: BaseController, method: () => any, args: any, operationName: string) : Promise<any | JobInfo> {
     // Read the job flag header
     const jobFlag = request?.headers?.[JobFlagHeader] as JobFlag;
     if (jobFlag !== JobFlag.ON) {
@@ -22,7 +35,7 @@ export async function jobify(request: any, controller: BaseController, method: (
         return method.apply(controller, args);
     }
     // Add the operation execution as a new job. 
-    const jobId = runNewJob(() => method.apply(controller, args));
+    const jobId = runNewJob(() => method.apply(controller, args), predefinedJobOptions[operationName]);
     // Inject the new created jod id to the controller context
     controller.context = { jobId };
     // Set job flag as ON to be send back to the consumer. 
