@@ -23,7 +23,9 @@ This project used to be a boilerplate for building an API server with the follow
 * Implementation Rest API controllers using [TSOA](https://tsoa-community.github.io/docs/)
 * Build app, generate and publish OpenAPI spec using [GitHub Actions](https://github.com/haimkastner/node-api-spec-boilerplate/actions) CI/CD pipes
 * Host OpenAPI documentation on [SwaggerHub](https://app.swaggerhub.com/apis/haimkastner/node-api-spec-boilerplate)
-* Host API Server on [railway](https://node-api-spec-boilerplate.castnet.club/)
+* Host [API Server](https://node-api-spec-boilerplate.castnet.club/) instance
+* Build OpenAPI based TypeScript SDK [open-api-based-sdk-boilerplate](https://github.com/haimkastner/open-api-based-sdk-boilerplate)
+* Hosting example SDK front UI on [NPM regitery](https://www.npmjs.com/package/@haimkastner/open-api-based-sdk-boilerplate)
 * Build Frontend API Facade for TypeScript based projects [react-typescript-spec-facade](https://github.com/haimkastner/react-typescript-spec-facade) 
 * Hosting example app front UI on [Netlify](https://react-typescript-spec-facade.castnet.club/)
 
