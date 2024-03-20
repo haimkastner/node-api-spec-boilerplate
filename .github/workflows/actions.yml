@@ -46,3 +46,13 @@ jobs:
       run: | # Update the spec with the API Server URL, then publish the new ready to publish spec ***PAY ATTENTION*** this will publish the API spec to the entire world!!! if you don't want it, change the published and visibility param.
         node ./scripts/set-spec-server.js dist/generated/swagger.json $API_SERVER_URL
         npx swaggerhub-cli api:create haimkastner/node-api-spec-boilerplate --file dist/generated/swagger.json --published=publish --visibility=public --setdefault
+    - name: Call re-run generate & publish SDK example # Trigger SDK package re-generate and publish
+      env:
+        SDK_EXAMPLE_WORKFLOW_TOKEN: ${{ secrets.SDK_EXAMPLE_WORKFLOW_TOKEN }}
+      run: |
+        # Trigger re-generate Python units once a new release created 
+        curl --fail --location --request POST 'https://api.github.com/repos/haimkastner/open-api-based-sdk-boilerplate/actions/workflows/release.yml/dispatches' \
+        --header 'Accept: application/vnd.github.everest-preview+json' \
+        --header 'Content-Type: application/json' \
+        --header "Authorization: token $SDK_EXAMPLE_WORKFLOW_TOKEN" \
+        --data-raw '{"ref": "main" }'
