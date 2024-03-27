@@ -41,4 +41,20 @@ export class PingController extends Controller {
             time: new Date().getTime(),
         };
     }
+
+    /**
+     * Send Ping request to API server 22.
+     * @param greeting The greeting to send :)
+     * @param ping The ping payload
+     * @returns A Pong object
+     */
+    @Post('/2')
+    public async ping2(@Query() greeting: string, @Body() ping?: Ping): Promise<Pong> {
+
+        console.log(`New ping arrived from "${ping?.whois}" who greet us with "${greeting}" :)`);
+        return {
+            greeting: '2',
+            time: new Date().getTime(),
+        };
+    }
 }
