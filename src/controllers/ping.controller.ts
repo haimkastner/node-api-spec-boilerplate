@@ -47,7 +47,7 @@ export class PingController extends Controller {
 
         console.log(`New ping arrived from "${ping?.whois}" who greet us with "${greeting}" :)`);
         return {
-            greeting + ' from 2',
+            greeting: greeting + ' from 2',
             time: new Date().getTime(),
         };
     }
