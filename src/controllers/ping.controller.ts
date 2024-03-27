@@ -41,14 +41,4 @@ export class PingController extends Controller {
             time: new Date().getTime(),
         };
     }
-
-    @Post('ping2')
-    public async ping2(@Query() greeting: string, @Body() ping?: Ping): Promise<Pong> {
-
-        console.log(`New ping arrived from "${ping?.whois}" who greet us with "${greeting}" :)`);
-        return {
-            greeting: greeting + ' from 2',
-            time: new Date().getTime(),
-        };
-    }
 }
